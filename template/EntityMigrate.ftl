@@ -52,7 +52,7 @@ under the License.
 <#recurse>
 </#macro>
 
-<#macro "description"><description>${.node}</description></#macro>
+<#macro "description"><description><#escape x as x?xml>${.node}</#escape></description></#macro>
 
 <#-- ========== entity and extend-entity ========== -->
 <#macro "entity">
