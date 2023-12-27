@@ -52,15 +52,13 @@ under the License.
 <#recurse>
 </#macro>
 
-<#macro "description">
-<#--        <description>${.node}</description>-->
-</#macro>
+<#macro "description"><description>${.node}</description></#macro>
 
 <#-- ========== entity and extend-entity ========== -->
 <#macro "entity">
     <#-- TODO: read from entitygroup.xml file(s) to find value (if applicable) for group-name attribute -->
     <entity entity-name="${.node["@entity-name"]}" package="${.node["@package-name"]}"<#if .node["@table-name"]?has_content> table-name="${.node["@table-name"]}"</#if><#if .node["@sequence-bank-size"]?has_content> sequence-bank-size="${.node["@sequence-bank-size"]}"</#if><#if .node["@enable-lock"]?has_content> optimistic-lock="${.node["@enable-lock"]}"</#if><#if .node["@no-auto-stamp"]?has_content> no-update-stamp="${.node["@no-auto-stamp"]}"</#if><#if .node["@never-cache"]?if_exists == "true"> cache="never"</#if> <#if groupName?has_content>group="${groupName}"</#if>>
-        <#recurse>
+          <#recurse>
     </entity>
 </#macro>
 
@@ -75,9 +73,7 @@ under the License.
 <#macro "field">
     <#assign isPk = false>
     <#list .node?parent["prim-key"] as primKey><#if primKey["@field"] == .node["@name"]><#assign isPk = true></#if></#list>
-            <field name="${.node["@name"]}" type="${typeMap[.node["@type"]]}"<#if isPk> is-pk="true"</#if><#if .node["@col-name"]?has_content> column-name="${.node["@col-name"]}"</#if><#if .node["@encrypt"]?has_content> encrypt="${.node["@encrypt"]}"</#if><#if .node["@enable-audit-log"]?has_content> enable-audit-log="${.node["@enable-audit-log"]}"</#if>>
-            <#recurse>
-        </field>
+        <field name="${.node["@name"]}" type="${typeMap[.node["@type"]]}"<#if isPk> is-pk="true"</#if><#if .node["@col-name"]?has_content> column-name="${.node["@col-name"]}"</#if><#if .node["@encrypt"]?has_content> encrypt="${.node["@encrypt"]}"</#if><#if .node["@enable-audit-log"]?has_content> enable-audit-log="${.node["@enable-audit-log"]}"</#if>><#recurse></field>
 </#macro>
 <#macro "prim-key"><#-- ignore, is handled in the field macro --></#macro>
 
