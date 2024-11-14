@@ -15,10 +15,10 @@ domain and may only be used under terms of a commercial license.
 
 "id":"id", "id-long":"id-long", "id-vlong":"id-long",
 "indicator":"text-indicator", "very-short":"text-short", "short-varchar":"text-medium",
-"long-varchar":"text-long", "very-long":"text-very-long",
+"long-varchar":"text-medium", "very-long":"text-very-long",
 
-"comment":"text-long", "description":"text-long", "name":"text-medium", "value":"text-long",
-"credit-card-number":"text-long", "credit-card-date":"text-short", "email":"text-long", "url":"text-long",
+"comment":"text-medium", "description":"text-medium", "name":"text-medium", "value":"text-medium",
+"credit-card-number":"text-short", "credit-card-date":"text-short", "email":"text-medium", "url":"text-medium",
 "id-ne":"id", "id-long-ne":"id-long", "id-vlong-ne":"id-long", "tel-number":"text-medium"
 }/>
 <?xml version="1.0" encoding="UTF-8"?>
