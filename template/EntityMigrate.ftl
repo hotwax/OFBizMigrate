@@ -21,6 +21,38 @@ domain and may only be used under terms of a commercial license.
 "credit-card-number":"text-short", "credit-card-date":"text-short", "email":"text-medium", "url":"text-medium",
 "id-ne":"id", "id-long-ne":"id-long", "id-vlong-ne":"id-long", "tel-number":"text-medium"
 }/>
+<#assign excludedEntities = ["Affiliate","AddressMatchMap",
+"AgreementAttribute","AgreementContentType","AgreementContent","AgreementFacilityAppl","AgreementGeographicalApplic","AgreementItemAttribute","AgreementItemTypeAttr","AgreementItemType","AgreementItem","AgreementPartyApplic","AgreementProductAppl","AgreementPromoAppl","AgreementRole","AgreementTermAttribute","AgreementTerm","AgreementTypeAttr","AgreementType","AgreementWorkEffortApplic","Agreement","AudioDataResource",
+"BrowserType",
+"CarrierGeoMapping","CartAbandonedLine","CatalinaSession","CharacterSet","CommunicationEventProduct","Component","CustRequestItemWorkEffort","ConfigOptionProductOption","ContentAttribute","ContentKeyword","ContentMetaData","ContentOperation","ContentPurpose", "ContentPurposeOperation", "ContentPurposeType", "ContentRevision", "ContentRevisionItem","ContentSearchConstraint","ContentSearchResult", "ContentStatus", "ContentTypeAttr","CountryCapital","CountryCode", "CountryTeleCode", "CustomTimePeriod",
+"CustRequest","CustRequestAttribute","CustRequestCategory","CustRequestCommEvent","CustRequestContent","CustRequestItem","CustRequestItemNote",
+"CustRequestNote","CustRequestParty","CustRequestResolution","CustRequestStatus","CustRequestType","CustRequestTypeAttr","CustRequestWorkEffort",
+"DataSource","DataCategory","DataSourceType","DataTemplateType","DesiredFeature",
+"DataResource","DataResourceAttribute","DataResourceMetaData","DataResourcePurpose","DataResourceRole","DataResourceType","DataResourceTypeAttr",
+"Document","DocumentAttribute","DocumentType","DocumentTypeAttr",
+"ElectronicText","EntityAuditLog","EmailAddressVerification",
+"FacilityLocationGeoPoint","FacilityTypeAttr","FileExtension","FacilityContent",
+"ImageDataResource","InventoryItemAttribute","InventoryItemLabelAppl","InventoryItemLabelType","InventoryItemLabel","InventoryItemTypeAttr","ItemIssuanceRole"
+,"JobManagerLock","JobSandbox",
+"KeywordThesaurus",
+"LotContentType","LotContent","LotWorkEffort",
+"MarketInterest","MetaDataPredicate","MimeTypeHtmlTemplate","MimeType","MrpEventType","MrpEvent",
+"NeedType",
+"OrderAdjustmentAttribute","OrderAdjustmentBilling","OrderAdjustmentTypeAttr","OrderBlacklistType","OrderBlacklist","OrderDeliverySchedule","OrderHeaderWorkEffort","OrderItemPriceInfo","OrderItemsReadyToPick","OrderProductPromoCode","OrderRequirementCommitment","OrderTermAttribute","OrderTypeAttr","OtherDataResource",
+"PartyAcctgPreference","PartyClassContentType","PartyClassGroupContent","PartyDataSource","PartyGeoPoint","PartyIcsAvsOverride","PartyInvitationGroupAssoc","PartyInvitationRoleAssoc","PartyInvitation","PartyNeed","PartyNote","PartyProductType","PartyProduct","PartyProfileDefault","PartyQualType","PartyQual","PaymentMethodTypeTerm","PeriodType","PlatformType","PlatformType",
+"PortalPageColumn","PortalPagePortlet","PortalPage","PortalPortlet","PortletAttribute","PortletCategory","PortletPortletCategory","PostalAddressBoundary","ProdConfItemContentType","ProdConfItemContent","ProductCalculatedInfo","ProductCategoryAttribute","ProductCategoryTypeAttr","ProductConfigConfig","ProductConfigItem","ProductConfigOptionIactn","ProductConfigOption","ProductConfigProduct","ProductConfigStats",
+"ProductConfig","ProductFeatureApplAttr","ProductFeatureCategoryAppl","ProductFeatureCategory","ProductFeatureCatGrpAppl","ProductFeatureDataResource","ProductFeatureGroupAppl","ProductFeatureGroup","ProductFeatureIactnType","ProductFeatureIactn","ProductFeaturePrice","ProductGeo","ProductGroupOrder","ProductKeyword","ProductMaintType","ProductMaint","ProductMeterType","ProductMeter","ProductOrderItem","ProductPaymentMethodType","ProductPriceActionType","ProductPriceAction","ProductPriceAutoNotice","ProductPriceChange","ProductPriceCond","ProductPricePurpose","ProductPriceRule","ProductPriceType",
+"ProductPromoAction","ProductPromoCategory","ProductPromoCodeEmail","ProductPromoCodeParty","ProductPromoCode","ProductPromoCond","ProductPromoContent","ProductPromoProduct","ProductPromoRule","ProductPromoUse","ProductPromo","ProductReview","ProductRole","ProductSearchConstraint","ProductStoreGroupMember","ProductStoreGroupRole","ProductStoreGroupRollup","ProductStoreGroupType","ProductStoreGroup","ProductStoreKeywordOvrd","ProductStorePaymentNetwork","ProductStorePaymentSetting","ProductStorePromoAppl","ProductStoreSurveyAppl","ProductStoreVendorPayment","ProductStoreVendorShipment","ProductSubscriptionResource","ProtectedView","ProtocolType",
+"QuantityBreakType","QuantityBreak",
+"RecurrenceInfo","RecurrenceRule","RejectionReason","RequirementAttribute","RequirementCustRequest","RequirementRole","RequirementStatus","RequirementType","Requirement","ReturnItemBilling","RuntimeData",
+"SecurityGroupPermission","SecurityGroup","SecurityPermission","ServerHitBin","ServerHitType","ServerHit","ServiceSemaphore","ShipmentGatewayDhl","ShipmentItemBilling","ShoppingListItemSurvey","ShoppingListItem","ShoppingListType","ShoppingListWorkEffort","ShoppingList","SubscriptionActivity","SubscriptionAttribute","SubscriptionCommEvent","SubscriptionFulfillmentPiece","SubscriptionResource","SubscriptionTypeAttr","SubscriptionType","Subscription","SupplierPrefOrder","SupplierProductFeature","SupplierProduct","SupplierRatingType","SurveyApplType","SurveyMultiRespColumn","SurveyMultiResp","SurveyPage","SurveyQuestionAppl","SurveyQuestionCategory","SurveyQuestionOption","SurveyQuestionType","SurveyQuestion","SurveyResponseAnswer","SurveyResponse","SurveyTrigger","Survey",
+"TarpittedLoginView","TaxAuthorityRateType","TemporalExpressionAssoc","TemporalExpression","TenantComponent","TenantDataSource","TenantDomainName","TenantKeyEncryptingKey","Tenant","TermTypeAttr","TermType",
+"UserAgentMethodType","UserAgentType","UserAgent","UserLoginHistory","UserLoginPasswordHistory","UserLoginSecurityGroup","UserLoginSecurityQuestion","UserLoginSession",
+"ValidContactMechRole","VendorProduct","Vendor","VideoDataResource","Visitor","Visitor","Visit","Visit","VisualThemeResource","VisualThemeSet","VisualTheme",
+"WebAnalyticsConfig","WebAnalyticsType","WebPage","WebPreferenceType","WebSiteCatalog","WebSiteContentType","WebSiteContent","WebSitePathAlias","WebSitePublishPoint","WebSiteRole","WebUserPreference","WorkEffortAssocAttribute","WorkEffortAssocTypeAttr","WorkEffortAssocType","WorkEffortAssoc","WorkEffortAttribute","WorkEffortBilling","WorkEffortContactMech","WorkEffortContentType","WorkEffortContent","WorkEffortDeliverableProd","WorkEffortEntityRel","WorkEffortEventReminder","WorkEffortFixedAssetAssign","WorkEffortFixedAssetStd","WorkEffortGoodStandardType","WorkEffortGoodStandard","WorkEffortPartyAssignment","WorkEffortPurposeType","WorkEffortStatus","WorkEffortType","WorkEffort","WorkOrderItemFulfillment","WorkReqFulfType","WorkRequirementFulfillment",
+"X509IssuerProvision",
+"ReportConfig","ItemThreshold","Expedited","OnPreorder","OnBackorder","CmbdPreorderBackorder","CmbdPreoBackoStyClrSiz","UnreconciledShipment","UnrecShipOrderSummary","PreorderStyleColorSize","PreOrderItemAllBrand","WmiShippedYesterday","WmiBacklog","WmiBacklogUnits","UnreconciledHoldItem","PurchaseOrders","CancelledAfterBrokered","DailyShippedUnitsStore","DailyShippedUnitsStyle","WmiRejectShipment","BopisOrders","CreatedShopifyOrders","ReleasedPreorders","ReleasedPreordersStyle","OffPreorder","OffBackorder","SendSaleUnfillableItems","OnTracShipment","CommissionSales","CommissionReturn","ShipmentTrackingNum","CancelledOrders","FacilityOnOff","FacilityUpcOnOff","DailyOrderList","DailyOrderSummary","DailyReturnList","DailyReturnSummary","DailyAppeasementList","DailyAppeasementSummary","UnfilableItem","PreorderBackorderStats","SalesSummary","YtyDemand","ReturnRateYtd","ReturnRateWeekly","PaymentCaptureNotShipped","InvoicingCondensed","SalesByItemLevelCityState","ShippingFeeTotal","VarianceRecords","ShippingRefundTotal","ShippedUnitsByLocation","RejectionRate","StoreWarehouseShippedRate","ShippedOrdersMonthly","ReturnShippingRefundByOrder","ReturnOrdersMonthly","SalesShippingRevenueByOrder","DemandTracking","StoreWarehouseWeeklyShiUnits","StoreWarehouseMonthlyShiUnits","SalesByState","SalesShippingRevenueByState","ReturnsByState","ReturnsShippingAdjByState","SalesByCity","SalesShippingRevenueByCity","ReturnsByCity","ReturnsShippingAdjByCity","ReturnsByOrder","BrokeredItems","RejectedItems","ShippedItems","ReleasedBackorders","ReleasedBackordersStyle"
+] />
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -56,18 +88,23 @@ under the License.
 
 <#-- ========== entity and extend-entity ========== -->
 <#macro "entity">
+    <#local ename = .node["@entity-name"] />
+    <#if !excludedEntities?seq_contains(ename)>
     <#-- TODO: read from entitygroup.xml file(s) to find value (if applicable) for group-name attribute -->
     <entity entity-name="${.node["@entity-name"]}" package="${.node["@package-name"]}"<#if .node["@table-name"]?has_content> table-name="${.node["@table-name"]}"</#if><#if .node["@sequence-bank-size"]?has_content> sequence-bank-size="${.node["@sequence-bank-size"]}"</#if><#if .node["@enable-lock"]?has_content> optimistic-lock="${.node["@enable-lock"]}"</#if><#if .node["@no-auto-stamp"]?has_content> no-update-stamp="${.node["@no-auto-stamp"]}"</#if><#if .node["@never-cache"]?if_exists == "true"> cache="never"</#if> <#if groupName?has_content>group="${groupName}"</#if>>
           <#recurse>
     </entity>
+    </#if>
 </#macro>
 
 <#macro "extend-entity">
     <#local entityName = .node["@entity-name"] />
+    <#if !excludedEntities?seq_contains(entityName)>
     <#local packageName = packageMap.get(entityName)! />
     <extend-entity entity-name="${.node["@entity-name"]}" package="${packageName!}" <#if groupName?has_content>group="${groupName!}"</#if>>
         <#recurse>
     </extend-entity>
+    </#if>
 </#macro>
 
 <#macro "field">
@@ -79,12 +116,14 @@ under the License.
 
 <#macro "relation">
         <#local relEntityName = .node["@rel-entity-name"] />
+        <#if !excludedEntities?seq_contains(relEntityName)>
         <#local packageName = packageMap.get(relEntityName)! />
         <#if packageName?has_content>
             <#local relEntityName = packageName + "." + relEntityName/>
         <relationship type="${.node["@type"]}"<#if .node["@fk-name"]?has_content> fk-name="${.node["@fk-name"]}"</#if><#if .node["@title"]?has_content> title="${.node["@title"]?cap_first}"</#if> related="${relEntityName}">
         <#recurse>
         </relationship>
+        </#if>
         </#if>
 </#macro>
 <#macro "key-map">
