@@ -94,7 +94,6 @@ domain and may only be used under terms of a commercial license.
                     env.process()
                 }
             }
-
             for (Map.Entry<Object, Object>  entifyDefinition : entifyDefinitions.entrySet()){
                 List entities = (List) entifyDefinition.getValue();
                 for (String entity in entities) {
@@ -131,6 +130,83 @@ domain and may only be used under terms of a commercial license.
         <default-response url="."/>
     </transition>
 
+
+
+    <transition name="migrateOfbizDataFiles">
+        <actions><script><![CDATA[
+            import org.moqui.util.MNode
+            import org.moqui.context.ExecutionContext
+            import freemarker.core.Environment
+            import org.apache.commons.io.filefilter.FileFilterUtils
+
+            def dataFiles = [:];
+            List locations = ["framework", "applications", "plugins"]
+            def allowedReaders = ["seed","seed-initial","ext-seed", "ext-seed-initial","ext"]
+            for (String location : locations) {
+                File frameworkLocation = new File("${ofbizRootLocation}/${location}");
+                for (File file : frameworkLocation.listFiles()) {
+                    File ofbizComponent = new File(file.getPath()+ "/ofbiz-component.xml")
+                    if (ofbizComponent.exists()) {
+                        def xml = new XmlParser().parse(ofbizComponent)
+                        def filteredResources = xml.'entity-resource'.findAll { it.@type == 'data' && it.@'reader-name' in allowedReaders}
+                        filteredResources.each { resource ->
+                            def readerName = resource.@'reader-name'
+                            def locationPath = file.getPath() + "/" + resource.@location
+                            File omsDataFile = new File(locationPath)
+                            if (omsDataFile.exists()) {
+                                // Check if the key exists in the map
+                                if (dataFiles.containsKey(readerName)) {
+                                    // Append to the existing list
+                                    dataFiles[readerName] << locationPath
+                                } else {
+                                    // Create a new list and add the value
+                                    dataFiles[readerName] = [locationPath]
+                                }
+                            } else {
+                                ec.logger.error("No data file found at location ${locationPath}")
+                            }
+                        }
+                    }
+                }
+            }
+            ExecutionContext ec = context.ec
+            for (Map.Entry<Object, Object>  omsDataFile : dataFiles.entrySet()) {
+                List entities = (List) omsDataFile.getValue();
+                 reader = (String) omsDataFile.getKey()
+                for (String dataFile in entities) {
+                    def fileName = dataFile.substring(dataFile.lastIndexOf("/")+1, dataFile.lastIndexOf("."))
+                    entityXmlRoot = MNode.parse(ec.resource.getLocationReference(dataFile))
+                    ec.logger.info("===dataFile==${dataFile}=")
+                    String templateLocation = "component://OFBizMigrate/template/DataMigrate.ftl"
+                    freemarker.template.Template newTemplate = null
+                    Reader templateReader = null
+                    try {
+                        templateReader = new InputStreamReader(ec.resource.getLocationStream(templateLocation))
+                        newTemplate = new freemarker.template.Template(templateLocation, templateReader,
+                                ec.resource.ftlTemplateRenderer.getFtlConfiguration())
+                    } catch (Exception e) {
+                        ec.message.addError("Error while initializing XMLActions template at [${templateLocation}]: ${e.toString()}")
+                    } finally {
+                        if (templateReader) templateReader.close()
+                    }
+                    //fileName = org.moqui.util.StringUtilities.prettyToCamelCase("${entifyDefinition.getKey()}-${fileName}", true)
+                    moquiEntityFilename = "${moquiDirectory}/${fileName}Data.xml"
+                    File outFile = new File(moquiEntityFilename)
+                    if (!outFile.createNewFile()) {
+                        logger.warn("File ${moquiEntityFilename} already exists, overriding file")
+                    }
+
+                    PrintWriter pw = new PrintWriter(outFile)
+                    Environment env = newTemplate.createProcessingEnvironment(ec.contextStack, pw)
+                    env.process()
+                    pw.close()
+                    ec.message.addMessage("Wrote migrated entities to file ${moquiEntityFilename}")
+                }
+            }
+
+            ]]></script></actions>
+        <default-response url="."/>
+    </transition>
     <widgets>
         <form-single name="SpecifyFile" transition="migrateFile">
             <field name="ofbizEntityFilename"><default-field><text-line size="60"/></default-field></field>
@@ -138,9 +214,14 @@ domain and may only be used under terms of a commercial license.
             <field name="submit"><default-field title="Migrate"><submit/></default-field></field>
         </form-single>
         <form-single name="SpecifyOfbizRoot" transition="migrateOfbizFiles">
-            <field name="ofbizRootLocation"><default-field><text-line size="60" default-value=""/></default-field></field>
+            <field name="ofbizRootLocation"><default-field><text-line size="60" default-value="/Users/deepakdixit/sandbox/hotwax_sandbox/sm/smus/oms"/></default-field></field>
             <field name="groupName"><default-field><text-line size="60" default-value="ofbiz_transactional"/></default-field></field>
-            <field name="moquiDirectory"><default-field><text-line size="60" default-value=""/></default-field></field>
+            <field name="moquiDirectory"><default-field><text-line size="60" default-value="/Users/deepakdixit/sandbox/moqui_sandbox/hotwax/hotwax-moqui/runtime/component/ofbiz-oms-udm/entity/"/></default-field></field>
+            <field name="submit"><default-field title="Migrate"><submit/></default-field></field>
+        </form-single>
+        <form-single name="SpecifyFileOfbizRoot" transition="migrateOfbizDataFiles">
+            <field name="ofbizRootLocation"><default-field><text-line size="60" default-value="/Users/deepakdixit/sandbox/hotwax_sandbox/sm/smus/oms"/></default-field></field>
+            <field name="moquiDirectory"><default-field><text-line size="60" default-value="/Users/deepakdixit/sandbox/moqui_sandbox/hotwax/hotwax-moqui/runtime/component/ofbiz-oms-udm/data/"/></default-field></field>
             <field name="submit"><default-field title="Migrate"><submit/></default-field></field>
         </form-single>
     </widgets>
