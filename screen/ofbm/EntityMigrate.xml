@@ -170,11 +170,15 @@ domain and may only be used under terms of a commercial license.
                 }
             }
             ExecutionContext ec = context.ec
+            def ootbFiles = ["OrderSeedData","PartySeedData","ProductSeedData"]
+            def skipDatafiles = ["ApiData","ApiSchemaDhl","ApiWebSiteData","CommerceScheduleServiceData","CommerceSecurityGroupsData","CommerceSecurityPermissionsData","CommerceWebSiteData","CommonEmailContentData","CommonExtSecurityPermissionSeedData","CommonExtSeedData","CommonPortletData","CommonSecurityPermissionSeedData","CountryCodeData","EntityExtSecurityPermissionSeedData","FacilitySecurityPermissionSeedData","HamburgerMenusData","LanguageData","MDMContentData","ManufacturingSecurityPermissionSeedData","OfbizSetupSecurityPermissionSeedData","OrderPdfContentData","OrderPortletData","OrderSecurityPermissionSeedData","OrderTypeData","PartyGeoPointData","PartyTypeData","PeriodData","PicklistPdfContentData","ProductPortletData","ProductSecurityPermissionSeedData","SecurityGroupPermissionData","SecurityPermissionSeedData","ServiceSecurityPermissionSeedData","SetupData","ShopifySecurityGroupsData","SystemInfoPortletData","TemporalExpressionData","WebtoolsSecurityPermissionSeedData"]
             for (Map.Entry<Object, Object>  omsDataFile : dataFiles.entrySet()) {
                 List entities = (List) omsDataFile.getValue();
                  reader = (String) omsDataFile.getKey()
                 for (String dataFile in entities) {
                     def fileName = dataFile.substring(dataFile.lastIndexOf("/")+1, dataFile.lastIndexOf("."))
+                    if (skipDatafiles.contains(fileName))
+                        continue;
                     entityXmlRoot = MNode.parse(ec.resource.getLocationReference(dataFile))
                     ec.logger.info("===dataFile==${dataFile}=")
                     String templateLocation = "component://OFBizMigrate/template/DataMigrate.ftl"
@@ -190,7 +194,11 @@ domain and may only be used under terms of a commercial license.
                         if (templateReader) templateReader.close()
                     }
                     //fileName = org.moqui.util.StringUtilities.prettyToCamelCase("${entifyDefinition.getKey()}-${fileName}", true)
-                    moquiEntityFilename = "${moquiDirectory}/${fileName}Data.xml"
+                    if (ootbFiles.contains(fileName)) {
+                    //To load prior added suffix
+                        fileName = "B"+fileName;
+                    }
+                    moquiEntityFilename = "${moquiDirectory}/${fileName}.xml"
                     File outFile = new File(moquiEntityFilename)
                     if (!outFile.createNewFile()) {
                         logger.warn("File ${moquiEntityFilename} already exists, overriding file")
@@ -215,7 +223,7 @@ domain and may only be used under terms of a commercial license.
         </form-single>
         <form-single name="SpecifyOfbizRoot" transition="migrateOfbizFiles">
             <field name="ofbizRootLocation"><default-field><text-line size="60" default-value="/Users/deepakdixit/sandbox/hotwax_sandbox/sm/smus/oms"/></default-field></field>
-            <field name="groupName"><default-field><text-line size="60" default-value="ofbiz_transactional"/></default-field></field>
+            <field name="groupName"><default-field><text-line size="60" default-value="transactional"/></default-field></field>
             <field name="moquiDirectory"><default-field><text-line size="60" default-value="/Users/deepakdixit/sandbox/moqui_sandbox/hotwax/hotwax-moqui/runtime/component/ofbiz-oms-udm/entity/"/></default-field></field>
             <field name="submit"><default-field title="Migrate"><submit/></default-field></field>
         </form-single>
