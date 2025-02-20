@@ -140,7 +140,7 @@ domain and may only be used under terms of a commercial license.
             import org.apache.commons.io.filefilter.FileFilterUtils
 
             def dataFiles = [:];
-            List locations = ["framework", "applications", "plugins"]
+            List locations = ["framework", "applications"]
             def allowedReaders = ["seed","seed-initial","ext-seed", "ext-seed-initial","ext"]
             for (String location : locations) {
                 File frameworkLocation = new File("${ofbizRootLocation}/${location}");
@@ -198,6 +198,10 @@ domain and may only be used under terms of a commercial license.
                     //To load prior added suffix
                         fileName = "B"+fileName;
                     }
+                    if (fileName.equals("CommerceTypeData")) {
+                    //To load prior added suffix
+                        fileName = "BSeedExt"+fileName;
+                    }
                     moquiEntityFilename = "${moquiDirectory}/${fileName}.xml"
                     File outFile = new File(moquiEntityFilename)
                     if (!outFile.createNewFile()) {
@@ -222,14 +226,14 @@ domain and may only be used under terms of a commercial license.
             <field name="submit"><default-field title="Migrate"><submit/></default-field></field>
         </form-single>
         <form-single name="SpecifyOfbizRoot" transition="migrateOfbizFiles">
-            <field name="ofbizRootLocation"><default-field><text-line size="60" default-value="/Users/deepakdixit/sandbox/hotwax_sandbox/sm/smus/oms"/></default-field></field>
-            <field name="groupName"><default-field><text-line size="60" default-value="transactional"/></default-field></field>
-            <field name="moquiDirectory"><default-field><text-line size="60" default-value="/Users/deepakdixit/sandbox/moqui_sandbox/hotwax/hotwax-moqui/runtime/component/ofbiz-oms-udm/entity/"/></default-field></field>
+            <field name="ofbizRootLocation"><default-field><text-line size="60" default-value=""/></default-field></field>
+            <field name="groupName"><default-field><text-line size="60" default-value=""/></default-field></field>
+            <field name="moquiDirectory"><default-field><text-line size="60" default-value=""/></default-field></field>
             <field name="submit"><default-field title="Migrate"><submit/></default-field></field>
         </form-single>
         <form-single name="SpecifyFileOfbizRoot" transition="migrateOfbizDataFiles">
-            <field name="ofbizRootLocation"><default-field><text-line size="60" default-value="/Users/deepakdixit/sandbox/hotwax_sandbox/sm/smus/oms"/></default-field></field>
-            <field name="moquiDirectory"><default-field><text-line size="60" default-value="/Users/deepakdixit/sandbox/moqui_sandbox/hotwax/hotwax-moqui/runtime/component/ofbiz-oms-udm/data/"/></default-field></field>
+            <field name="ofbizRootLocation"><default-field><text-line size="60" default-value=""/></default-field></field>
+            <field name="moquiDirectory"><default-field><text-line size="60" default-value=""/></default-field></field>
             <field name="submit"><default-field title="Migrate"><submit/></default-field></field>
         </form-single>
     </widgets>

@@ -75,7 +75,7 @@ domain and may only be used under terms of a commercial license.
     </#if>
 </#macro>
 <#macro "StatusValidChange">
-    <moqui.basic.StatusFlowTransition statusFlowId="Default" statusId="${.node["@statusId"]}" toStatusId="${.node["@statusId"]}" transitionName="${.node["@transitionName"]}"<#if .node["@transitionSequence"]?has_content> transitionSequence="${.node["@transitionSequence"]}"</#if><#if .node["@conditionExpression"]?has_content> conditionExpression="${.node["@conditionExpression"]}"</#if>/>
+    <moqui.basic.StatusFlowTransition statusFlowId="Default" statusId="${.node["@statusId"]}" toStatusId="${.node["@statusIdTo"]}" transitionName="${.node["@transitionName"]}"<#if .node["@transitionSequence"]?has_content> transitionSequence="${.node["@transitionSequence"]}"</#if><#if .node["@conditionExpression"]?has_content> conditionExpression="${.node["@conditionExpression"]}"</#if>/>
 </#macro>
 <#macro "UomConversion">
     <moqui.basic.UomConversion uomConversionId="${.node["@uomId"]}<#if .node["@uomIdTo"]?has_content>_${.node["@uomIdTo"]}</#if>" uomId="${.node["@uomId"]}" toUomId="${.node["@uomIdTo"]}" conversionFactor="${.node["@conversionFactor"]}"/>
