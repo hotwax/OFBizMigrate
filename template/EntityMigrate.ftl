@@ -32,7 +32,7 @@ domain and may only be used under terms of a commercial license.
 "DataResourceAttribute","DataResourceMetaData","DataResourcePurpose","DataResourceRole","DataResourceType","DataResourceTypeAttr",
 "Document","DocumentAttribute","DocumentType","DocumentTypeAttr",
 "EntityAuditLog","EmailAddressVerification",
-"FacilityLocationGeoPoint","FacilityTypeAttr","FileExtension","FacilityContent",
+"FacilityLocationGeoPoint","FacilityTypeAttr","FileExtension",
 "ImageDataResource","InventoryItemAttribute","InventoryItemLabelAppl","InventoryItemLabelType","InventoryItemLabel","InventoryItemTypeAttr","ItemIssuanceRole"
 ,"JobManagerLock","JobSandbox",
 "KeywordThesaurus",
