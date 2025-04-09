@@ -18,7 +18,7 @@ domain and may only be used under terms of a commercial license.
 "long-varchar":"text-medium", "very-long":"text-very-long",
 
 "comment":"text-medium", "description":"text-medium", "name":"text-medium", "value":"text-medium",
-"credit-card-number":"text-short", "credit-card-date":"text-short", "email":"text-medium", "url":"text-medium",
+"credit-card-number":"text-short", "credit-card-date":"text-short", "email":"text-medium", "url":"text-long",
 "id-ne":"id", "id-long-ne":"id-long", "id-vlong-ne":"id-long", "tel-number":"text-medium"
 }/>
 <#assign skipEntity = ["GeoPoint", "StatusItem", "Uom", "Enumeration", "EnumerationType", "Geo", "GeoAssoc", "StatusType","SystemMessageType", "SystemMessageRemote"] />
