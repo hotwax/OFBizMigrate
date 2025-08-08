@@ -18,7 +18,7 @@ domain and may only be used under terms of a commercial license.
 "long-varchar":"text-medium", "very-long":"text-very-long",
 
 "comment":"text-medium", "description":"text-medium", "name":"text-medium", "value":"text-medium",
-"credit-card-number":"text-short", "credit-card-date":"text-short", "email":"text-medium", "url":"text-long",
+"credit-card-number":"text-short", "credit-card-date":"text-short", "email":"text-medium", "url":"text-intermediate",
 "id-ne":"id", "id-long-ne":"id-long", "id-vlong-ne":"id-long", "tel-number":"text-medium"
 }/>
 <#assign skipEntity = ["GeoPoint", "StatusItem", "Uom", "Enumeration", "EnumerationType", "Geo", "GeoAssoc", "StatusType","SystemMessageType", "SystemMessageRemote"] />
@@ -53,7 +53,7 @@ domain and may only be used under terms of a commercial license.
 "WebAnalyticsConfig","WebAnalyticsType","WebPage","WebPreferenceType","WebSite","WebSiteCatalog","WebSiteContentType","WebSiteContent","WebSitePathAlias","WebSitePublishPoint","WebSiteRole","WebUserPreference","WorkEffortAssocAttribute","WorkEffortAssocTypeAttr","WorkEffortAssocType","WorkEffortAssoc","WorkEffortAttribute","WorkEffortBilling","WorkEffortContactMech","WorkEffortContentType","WorkEffortContent","WorkEffortDeliverableProd","WorkEffortEntityRel","WorkEffortEventReminder","WorkEffortFixedAssetAssign","WorkEffortFixedAssetStd","WorkEffortGoodStandardType","WorkEffortGoodStandard","WorkEffortPartyAssignment","WorkEffortPurposeType","WorkEffortStatus","WorkEffortType","WorkEffort","WorkOrderItemFulfillment","WorkReqFulfType","WorkRequirementFulfillment",
 "X509IssuerProvision","UomType","GeoType","UomConversion","UomConversionDated","UomGroup",
 "ReportConfig","ItemThreshold","Expedited","OnPreorder","OnBackorder","CmbdPreorderBackorder","CmbdPreoBackoStyClrSiz","UnreconciledShipment","UnrecShipOrderSummary","PreorderStyleColorSize","PreOrderItemAllBrand","WmiShippedYesterday","WmiBacklog","WmiBacklogUnits","UnreconciledHoldItem","PurchaseOrders","CancelledAfterBrokered","DailyShippedUnitsStore","DailyShippedUnitsStyle","WmiRejectShipment","BopisOrders","CreatedShopifyOrders","ReleasedPreorders","ReleasedPreordersStyle","OffPreorder","OffBackorder","SendSaleUnfillableItems","OnTracShipment","CommissionSales","CommissionReturn","ShipmentTrackingNum","CancelledOrders","FacilityOnOff","FacilityUpcOnOff","DailyOrderList","DailyOrderSummary","DailyReturnList","DailyReturnSummary","DailyAppeasementList","DailyAppeasementSummary","UnfilableItem","PreorderBackorderStats","SalesSummary","YtyDemand","ReturnRateYtd","ReturnRateWeekly","PaymentCaptureNotShipped","InvoicingCondensed","SalesByItemLevelCityState","ShippingFeeTotal","VarianceRecords","ShippingRefundTotal","ShippedUnitsByLocation","RejectionRate","StoreWarehouseShippedRate","ShippedOrdersMonthly","ReturnShippingRefundByOrder","ReturnOrdersMonthly","SalesShippingRevenueByOrder","DemandTracking","StoreWarehouseWeeklyShiUnits","StoreWarehouseMonthlyShiUnits","SalesByState","SalesShippingRevenueByState","ReturnsByState","ReturnsShippingAdjByState","SalesByCity","SalesShippingRevenueByCity","ReturnsByCity","ReturnsShippingAdjByCity","ReturnsByOrder","BrokeredItems","RejectedItems","ShippedItems","ReleasedBackorders","ReleasedBackordersStyle", "UnfillableHoldItem","DailyPoBoDeliveryUPC","TotalPoBoDeliveryUPC",
-"ContentApproval", "ContentAssocPredicate","ContentRole","EmailTemplateSetting", "CustomMethodType", "CustomMethod"
+"ContentApproval", "ContentAssocPredicate","EmailTemplateSetting", "CustomMethodType", "CustomMethod"
 <#-- "Content", "ContentAssoc", "ContentType", "ContentAssocType", "DataResource","ElectronicText",-->
 ] />
 <?xml version="1.0" encoding="UTF-8"?>
@@ -83,6 +83,7 @@ under the License.
 <#macro @element>
     <!-- TODO: skipped element ${.node?node_name} -->
 </#macro>
+
 <#macro "entitymodel">
 <#recurse>
 </#macro>
@@ -97,7 +98,7 @@ under the License.
             <#local ename = "Oms" + .node["@entity-name"] />
         </#if>
     <#-- TODO: read from entitygroup.xml file(s) to find value (if applicable) for group-name attribute -->
-    <entity entity-name="${ename}" package="${.node["@package-name"]}"<#if .node["@table-name"]?has_content> table-name="${.node["@table-name"]}"</#if><#if .node["@sequence-bank-size"]?has_content> sequence-bank-size="${.node["@sequence-bank-size"]}"</#if><#if .node["@enable-lock"]?has_content> optimistic-lock="${.node["@enable-lock"]}"</#if><#if .node["@no-auto-stamp"]?has_content> no-update-stamp="${.node["@no-auto-stamp"]}"</#if><#if .node["@never-cache"]?if_exists == "true"> cache="never"</#if><#if groupName?has_content> group="${groupName}"</#if>>
+    <entity entity-name="${ename}" package="${.node["@package-name"]}"<#if .node["@table-name"]?has_content> table-name="${.node["@table-name"]}"</#if><#if .node["@sequence-bank-size"]?has_content> sequence-bank-size="${.node["@sequence-bank-size"]}"</#if><#if .node["@enable-lock"]?has_content> optimistic-lock="${.node["@enable-lock"]}"</#if><#if .node["@no-auto-stamp"]?has_content> no-update-stamp="${.node["@no-auto-stamp"]}"</#if><#if .node["@never-cache"]?if_exists == "true"> cache="never"</#if><#if groupName?has_content> group="${groupName}"</#if><#if ename == "OrderItemShipGroup"> sequence-secondary-padded-length="5"</#if>>
           <#recurse>
     </entity>
     </#if>
